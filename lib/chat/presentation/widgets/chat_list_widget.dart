@@ -24,12 +24,12 @@ class ChatListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 248, 220, 1),
+      backgroundColor: const Color.fromRGBO(255, 248, 220, 1),
       body: Column(
         children: [
           Container(
             height: 230,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromRGBO(235, 158, 4, 1),
               borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
             ),
@@ -65,7 +65,7 @@ class ChatListView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Positioned(
+                              const Positioned(
                                 left: 17,
                                 top: 17,
                                 child: Text(
@@ -93,12 +93,12 @@ class ChatListView extends StatelessWidget {
                             right: 16,
                             bottom: 20,
                           ),
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF2A9D8F),
+                          decoration: const ShapeDecoration(
+                            color: Color(0xFF2A9D8F),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(
                                 width: 1,
-                                color: const Color(0xFF72D6C6),
+                                color: Color(0xFF72D6C6),
                               ),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(48),
@@ -114,7 +114,7 @@ class ChatListView extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +122,7 @@ class ChatListView extends StatelessWidget {
                               Text(
                                 '+Chat',
                                 style: TextStyle(
-                                  color: const Color(0xFFFFF8DC),
+                                  color: Color(0xFFFFF8DC),
                                   fontSize: 16,
                                   fontFamily: 'Fraunces',
                                   fontWeight: FontWeight.w600,
@@ -136,66 +136,68 @@ class ChatListView extends StatelessWidget {
                     ),
 
                     Container(
-                      width: 343,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 44,
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFFDD991),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  width: 1,
-                                  strokeAlign: BorderSide.strokeAlignOutside,
-                                  color: const Color(0xFF2A9D8F),
+                          Stack(
+                            children: [
+                              Container(
+                                decoration:  BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(200)),
+                                  border: const Border(
+                                    top: BorderSide(color: Color(0xFF2A9D8F), width: 1.5),
+                                    left: BorderSide(color: Color(0xFF2A9D8F), width: 1.5),
+                                    bottom: BorderSide(color: Color(0xFF2A9D8F), width: 1.5),
+                                    right: BorderSide(color: Color(0xFF2A9D8F), width: 1.5),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF2A9D8F).withOpacity(0.3),
+                                    ),
+                                    const BoxShadow(
+                                      color: Color(0xFFFDD991),
+                                      spreadRadius: -2.0,
+                                      blurRadius: 5.0,
+                                    ),
+                                  ],
                                 ),
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(200)),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Search for chats and people...',
+                                    hintStyle: const TextStyle(
+                                      color: Color(0xFF688682),
+                                      fontSize: 16,
+                                      fontFamily: 'Fraunces',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.20,
+                                    ),
+                                    prefixIcon: Container(
+                                      width: 24,
+                                      height: 24,
+                                      margin: const EdgeInsets.only(left: 20, right: 12),
+                                      child: Image.asset(
+                                        'assets/search_icon.png',
                                         width: 24,
                                         height: 24,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(),
-                                        child: Image.asset(
-                                          'assets/search_icon.png',
-                                          width: 24,
-                                          height: 24,
-                                          fit: BoxFit.contain,
-                                        ),
+                                        fit: BoxFit.contain,
                                       ),
-                                      const SizedBox(width: 12),
-                                      Text(
-                                        'Search for chats and people...  ',
-                                        style: TextStyle(
-                                          color: const Color(0xFF688682),
-                                          fontSize: 16,
-                                          fontFamily: 'Fraunces',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.20,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
+                                    border: InputBorder.none,
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                  ),
+                                  style: const TextStyle(
+                                    color: Color(0xFF688682),
+                                    fontSize: 16,
+                                    fontFamily: 'Fraunces',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.20,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -219,7 +221,7 @@ class ChatListView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color.fromRGBO(255, 243, 220, 0.5),
                     ),
                     child: BlocBuilder<ChatListBloc, ChatListState>(
@@ -283,12 +285,12 @@ class ChatListView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 239, 205, 1),
-        borderRadius: BorderRadius.only(
+        color: const Color.fromRGBO(255, 239, 205, 1),
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(35),
           bottomLeft: Radius.circular(35),
         ),
-        border: Border.all(color: Color.fromRGBO(114, 214, 198, 1), width: 3),
+        border: Border.all(color: const Color.fromRGBO(114, 214, 198, 1), width: 3),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
@@ -337,7 +339,7 @@ class ChatListView extends StatelessWidget {
                     children: [
                       Text(
                         chat.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           fontFamily: 'Fraunces',
@@ -365,7 +367,7 @@ class ChatListView extends StatelessWidget {
                   children: [
                     Text(
                       chat.timestamp,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromRGBO(74, 111, 106, 1),
                         fontSize: 12,
                         fontFamily: 'Fraunces',
@@ -378,13 +380,13 @@ class ChatListView extends StatelessWidget {
                           horizontal: 6,
                           vertical: 2,
                         ),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color.fromRGBO(42, 157, 143, 1),
                           shape: BoxShape.circle,
                         ),
                         child: Text(
                           chat.unreadCount.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
