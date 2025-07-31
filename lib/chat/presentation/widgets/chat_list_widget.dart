@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:feature_integration/chat/presentation/bloc/chat_list_bloc.dart';
 import 'package:feature_integration/chat/presentation/bloc/chat_list_event.dart';
 import 'package:feature_integration/chat/presentation/bloc/chat_list_state.dart';
 import 'package:feature_integration/chat/data/models/chat_model.dart';
+import 'package:feature_integration/core/core.dart';
 
 class ChatListWidget extends StatelessWidget {
   const ChatListWidget({super.key});
@@ -23,24 +25,21 @@ class ChatListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StatusBarConfig.setSecondaryStatusBar();
+    
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 248, 220, 1),
-      body: Column(
-        children: [
-          Container(
-            height: 230,
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(235, 158, 4, 1),
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
-            ),
-            child: SafeArea(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              height: AppSizes.headerHeight,
+              decoration: const BoxDecoration(
+                color: AppColors.secondary,
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
+              ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 16,
-                  bottom: 24,
-                ),
+                padding: AppSpacing.headerPadding,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,23 +47,23 @@ class ChatListView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 138,
-                          height: 60,
+                          width: AppSizes.loungeContainerWidth,
+                          height: AppSizes.loungeContainerHeight,
                           child: Stack(
                             children: [
                               Positioned(
                                 left: 0,
                                 top: 0,
                                 child: Container(
-                                  width: 138,
-                                  height: 60,
+                                  width: AppSizes.loungeContainerWidth,
+                                  height: AppSizes.loungeContainerHeight,
                                   decoration: const ShapeDecoration(
-                                    color: Color.fromRGBO(255, 239, 205, 1),
+                                    color: AppColors.secondaryLight,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(60),
-                                        bottomLeft: Radius.circular(30),
+                                        topLeft: Radius.circular(AppSizes.borderRadiusMedium),
+                                        topRight: Radius.circular(AppSizes.borderRadiusXXL),
+                                        bottomLeft: Radius.circular(AppSizes.borderRadiusMedium),
                                       ),
                                     ),
                                   ),
@@ -74,15 +73,9 @@ class ChatListView extends StatelessWidget {
                                 left: 17,
                                 top: 17,
                                 child: Text(
-                                  'Lounge',
+                                  AppConstants.loungeText,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.10,
-                                    fontFamily: 'Fraunces',
-                                  ),
+                                  style: AppTextStyles.headingLarge,
                                 ),
                               ),
                             ],
@@ -90,8 +83,8 @@ class ChatListView extends StatelessWidget {
                         ),
 
                         Container(
-                          width: 85,
-                          height: 44,
+                          width: AppSizes.addChatButtonWidth,
+                          height: AppSizes.addChatButtonHeight,
                           padding: const EdgeInsets.only(
                             top: 6,
                             left: 16,
@@ -99,23 +92,23 @@ class ChatListView extends StatelessWidget {
                             bottom: 20,
                           ),
                           decoration: const ShapeDecoration(
-                            color: Color.fromRGBO(42, 157, 143, 1),
+                            color: AppColors.primary,
                             shape: RoundedRectangleBorder(
                               side: BorderSide(
-                                width: 1,
-                                color: Color.fromRGBO(114, 214, 198, 1),
+                                width: AppSizes.borderWidthThin,
+                                color: AppColors.primaryLight,
                               ),
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(48),
-                                bottomRight: Radius.circular(48),
+                                bottomLeft: Radius.circular(AppSizes.borderRadiusXL),
+                                bottomRight: Radius.circular(AppSizes.borderRadiusXL),
                               ),
                             ),
                             shadows: [
                               BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.15),
-                                blurRadius: 8,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
+                                color: AppColors.shadowPrimary,
+                                blurRadius: AppSizes.shadowBlurRadius,
+                                offset: Offset(0, AppSizes.shadowOffsetY),
+                                spreadRadius: AppSizes.shadowSpreadRadius,
                               ),
                             ],
                           ),
@@ -125,14 +118,8 @@ class ChatListView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                '+Chat',
-                                style: TextStyle(
-                                  color: Color.fromRGBO(255, 248, 220, 1),
-                                  fontSize: 16,
-                                  fontFamily: 'Fraunces',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.20,
-                                ),
+                                AppConstants.addChatText,
+                                style: AppTextStyles.buttonPrimary,
                               ),
                             ],
                           ),
@@ -149,83 +136,67 @@ class ChatListView extends StatelessWidget {
                           Stack(
                             children: [
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.transparent,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(200),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(AppSizes.borderRadiusXXXL),
                                   ),
-                                  border: const Border(
+                                  border: Border(
                                     top: BorderSide(
-                                      color: Color.fromRGBO(42, 157, 143, 1),
-                                      width: 1.5,
+                                      color: AppColors.borderPrimary,
+                                      width: AppSizes.borderWidthMedium,
                                     ),
                                     left: BorderSide(
-                                      color: Color.fromRGBO(42, 157, 143, 1),
-                                      width: 2,
+                                      color: AppColors.borderPrimary,
+                                      width: AppSizes.borderWidthThick,
                                     ),
                                     bottom: BorderSide(
-                                      color: Color.fromRGBO(42, 157, 143, 1),
-                                      width: 1.5,
+                                      color: AppColors.borderPrimary,
+                                      width: AppSizes.borderWidthMedium,
                                     ),
                                     right: BorderSide(
-                                      color: Color.fromRGBO(42, 157, 143, 1),
-                                      width: 1.5,
+                                      color: AppColors.borderPrimary,
+                                      width: AppSizes.borderWidthMedium,
                                     ),
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
+                                      color: AppColors.shadowTertiary,
                                     ),
-                                    const BoxShadow(
+                                    BoxShadow(
                                       color: Color(0xFFFDD991),
-                                      spreadRadius: -2.0,
-                                      blurRadius: 5.0,
+                                      spreadRadius: AppSizes.shadowSpreadRadiusMedium,
+                                      blurRadius: AppSizes.shadowBlurRadiusMedium,
                                     ),
                                   ],
                                 ),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    hintText: 'Search for chats and people...',
-                                    hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(104, 134, 130, 1),
-                                      fontSize: 16,
-                                      fontFamily: 'Fraunces',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.20,
-                                    ),
-                                    prefixIcon: Container(
-                                      width: 24,
-                                      height: 24,
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 12,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/search_icon.png',
-                                        width: 24,
-                                        height: 24,
-                                        color: const Color.fromRGBO(
-                                          104,
-                                          134,
-                                          130,
-                                          1,
+                                    hintText: AppConstants.searchHintText,
+                                    hintStyle: AppTextStyles.searchHint,
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.only(bottom: 4),
+                                      child: Container(
+                                        width: AppSizes.searchIconSize,
+                                        height: AppSizes.searchIconSize,
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 0,
                                         ),
-                                        fit: BoxFit.contain,
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          AppConstants.searchIconPath,
+                                          width: AppSizes.searchIconSize,
+                                          height: AppSizes.searchIconSize,
+                                          color: AppColors.textTertiary,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
                                     ),
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 12,
-                                    ),
+                                    contentPadding: AppSpacing.searchPadding,
                                   ),
-                                  style: const TextStyle(
-                                    color: Color(0xFF688682),
-                                    fontSize: 16,
-                                    fontFamily: 'Fraunces',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.20,
-                                  ),
+                                  style: AppTextStyles.searchInput,
                                 ),
                               ),
                             ],
@@ -237,84 +208,81 @@ class ChatListView extends StatelessWidget {
                 ),
               ),
             ),
-          ),
 
-          Expanded(
-            child: Stack(
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/bg_image.png',
-                    width: 200,
-                    fit: BoxFit.fitWidth,
+            Expanded(
+              child: Stack(
+                children: [
+                  Center(
+                    child: Image.asset(
+                      AppConstants.backgroundImagePath,
+                      width: AppSizes.backgroundImageWidth,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 24,
-                    horizontal: 16,
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(255, 243, 220, .9),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(60),
-                        bottomLeft: Radius.circular(60),
+                  Padding(
+                    padding: AppSpacing.chatListPadding,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(AppSizes.borderRadiusXXL),
+                          bottomLeft: Radius.circular(AppSizes.borderRadiusXXL),
+                        ),
+                      ),
+                      child: BlocBuilder<ChatListBloc, ChatListState>(
+                        builder: (context, state) {
+                          switch (state.status) {
+                            case ChatListStatus.initial:
+                              return const Center(child: Text(AppConstants.initialText));
+
+                            case ChatListStatus.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            case ChatListStatus.success:
+                              return ListView.builder(
+                                itemCount: state.chats.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  final chat = state.chats[index];
+                                  return _buildChatTile(context, chat);
+                                },
+                              );
+
+                            case ChatListStatus.failure:
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.error,
+                                      size: AppSizes.errorIconSize,
+                                      color: Colors.red,
+                                    ),
+                                    AppSpacing.spaceM,
+                                    Text('${AppConstants.errorPrefix}${state.errorMessage}'),
+                                    AppSpacing.spaceM,
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        context.read<ChatListBloc>().add(
+                                          const ChatListEvent.fetchAllChats(),
+                                        );
+                                      },
+                                      child: const Text(AppConstants.retryText),
+                                    ),
+                                  ],
+                                ),
+                              );
+                          }
+                        },
                       ),
                     ),
-                    child: BlocBuilder<ChatListBloc, ChatListState>(
-                      builder: (context, state) {
-                        switch (state.status) {
-                          case ChatListStatus.initial:
-                            return const Center(child: Text('Initial'));
-
-                          case ChatListStatus.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case ChatListStatus.success:
-                            return ListView.builder(
-                              itemCount: state.chats.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                final chat = state.chats[index];
-                                return _buildChatTile(context, chat);
-                              },
-                            );
-
-                          case ChatListStatus.failure:
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.error,
-                                    size: 64,
-                                    color: Colors.red,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text('Error: ${state.errorMessage}'),
-                                  const SizedBox(height: 16),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      context.read<ChatListBloc>().add(
-                                        const ChatListEvent.fetchAllChats(),
-                                      );
-                                    },
-                                    child: const Text('Retry'),
-                                  ),
-                                ],
-                              ),
-                            );
-                        }
-                      },
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -324,19 +292,19 @@ class ChatListView extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(255, 239, 205, 1),
+            color: AppColors.secondaryLight,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(35),
-              bottomLeft: Radius.circular(35),
+              topLeft: Radius.circular(AppSizes.borderRadiusLarge),
+              bottomLeft: Radius.circular(AppSizes.borderRadiusLarge),
             ),
             border: Border.all(
-              color: const Color.fromRGBO(114, 214, 198, 1),
-              width: 3,
+              color: AppColors.primaryLight,
+              width: AppSizes.borderWidthExtraThick,
             ),
             boxShadow: const [
               BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.1),
-                spreadRadius: 1,
+                color: AppColors.shadowSecondary,
+                spreadRadius: AppSizes.shadowSpreadRadiusSmall,
                 blurRadius: 4,
                 offset: Offset(0, 2),
               ),
@@ -345,38 +313,33 @@ class ChatListView extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppSizes.borderRadiusSmall),
               onTap: () {},
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                  right: 16,
-                  top: 16,
-                  bottom: 16,
-                ),
+                padding: AppSpacing.chatTilePadding,
                 child: Row(
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
                         Container(
-                          width:48,
-                          height: 48,
+                          width: AppSizes.avatarSize,
+                          height: AppSizes.avatarSize,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Color.fromRGBO(42, 157, 143, 1)),
+                            border: Border.all(color: AppColors.borderPrimary),
                             boxShadow: const [
                               BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.1),
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(0,1),
+                                color: AppColors.shadowSecondary,
+                                spreadRadius: AppSizes.shadowSpreadRadiusSmall,
+                                blurRadius: AppSizes.shadowBlurRadiusSmall,
+                                offset: Offset(0, AppSizes.shadowOffsetYSmall),
                               ),
                             ],
                           ),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(chat.avatarUrl),
-                            radius: 24,
+                            radius: AppSizes.avatarRadius,
                           ),
                         ),
                         if (chat.isOnline)
@@ -384,21 +347,21 @@ class ChatListView extends StatelessWidget {
                             right: -2,
                             bottom: -2,
                             child: Container(
-                              width: 16,
-                              height: 16,
+                              width: AppSizes.onlineIndicatorSize,
+                              height: AppSizes.onlineIndicatorSize,
                               decoration: BoxDecoration(
-                                color: const Color.fromRGBO(40, 199, 111, 1),
+                                color: AppColors.online,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: const Color.fromRGBO(166, 233, 219, 1),
-                                  width: 1,
+                                  color: AppColors.onlineBorder,
+                                  width: AppSizes.borderWidthThin,
                                 ),
                               ),
                             ),
                           ),
                       ],
                     ),
-                    const SizedBox(width: 8),
+                    AppSpacing.spaceHorizontalS,
 
                     Expanded(
                       child: Column(
@@ -409,25 +372,16 @@ class ChatListView extends StatelessWidget {
                             children: [
                               Text(
                                 chat.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(12, 32, 29, 1),
-                                  fontFamily: 'Fraunces',
-                                ),
+                                style: AppTextStyles.chatName,
                               ),
 
                               Text(
                                 chat.timestamp,
-                                style: const TextStyle(
-                                  color: Color.fromRGBO(74, 111, 106, 1),
-                                  fontSize: 12,
-                                  fontFamily: 'Fraunces',
-                                ),
+                                style: AppTextStyles.chatTimestamp,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          AppSpacing.spaceXS,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -435,35 +389,25 @@ class ChatListView extends StatelessWidget {
                                 chat.lastMessage,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: Color.fromRGBO(21, 53, 49, .9),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Fraunces',
-                                ),
+                                style: AppTextStyles.chatLastMessage,
                               ),
 
                               if (chat.unreadCount > 0) ...[
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 2,
-                                    vertical: 2,
+                                    horizontal: AppSizes.unreadBadgePadding,
+                                    vertical: AppSizes.unreadBadgePadding,
                                   ),
-                                  width: 20,
-                                  height: 20,
+                                  width: AppSizes.unreadBadgeSize,
+                                  height: AppSizes.unreadBadgeSize,
                                   decoration: const BoxDecoration(
-                                    color: Color.fromRGBO(42, 157, 143, 1),
+                                    color: AppColors.primary,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Center(
                                     child: Text(
                                       chat.unreadCount.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Fraunces',
-                                      ),
+                                      style: AppTextStyles.unreadCount,
                                     ),
                                   ),
                                 ),
@@ -480,7 +424,7 @@ class ChatListView extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 16),
+        AppSpacing.spaceM,
       ],
     );
   }
